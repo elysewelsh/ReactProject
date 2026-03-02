@@ -30,7 +30,6 @@ if (error) {
     }
 const formattedUserIP = data.ip;
 setInput(formattedUserIP);
-return formattedUserIP;
 }, [])
 
 // runs after input updated (initially on mount, then when user updates)
@@ -100,7 +99,7 @@ function AppProviders({ children }) {
                     <ToDoContext.Provider value={{ toDos, toggleToDo, addToDo, editToDo, deleteToDo }}>
                         <ResponseContext.Provider value ={{apiData}}>
                             <IPContext.Provider value={{input}}>
-                                
+
                             </IPContext.Provider>
 
                         </ResponseContext.Provider>

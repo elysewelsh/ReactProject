@@ -1,9 +1,11 @@
-
+import { ResponseContext } from "../context/MapContext";
 
 const Map = () => {
-  const mapRef = useRef(null);
-  const latitude = latitude;
-  const longitude = longitude;
+    const { apiData } = useContext(ResponseContext);
+
+    const mapRef = useRef(null);
+    const latitude = apiData.latitude;
+    const longitude = apiData.longitude;
 
   return ( 
     // Make sure you set the height and width of the map container otherwise the map won't show
