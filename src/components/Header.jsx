@@ -1,9 +1,12 @@
 export default function Header() {
     return (
         <>
-        <p>Search for your IP</p>
-        <SearchInput />
-        <span>Error: {}</span>
+            <h1>IP Address Tracker</h1>
+            <SearchInput />
+            {error ?
+            <span>Error: {}</span> :
+            <></>
+            }
         </>
     )
 }

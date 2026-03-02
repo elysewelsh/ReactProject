@@ -5,17 +5,47 @@
 import { createContext, useState, useEffect } from "react"
 
 export const IPContext = createContext('')
-export const ResponseContext = createContext([])
+export const ResponseContext = createContext({})
 
 
 const [input, setInput] = useState('')
 
-const [apiData, setAPIData] = useState(
-
+//probably don't need this state
+const [apiResponse, setAPIResponse] = useState({
+    ip: '', //ip address
+    location: {
+        country: '',
+        region: '', //state
+        city: '', //city
+        lat: 0,
+        lng: 0,
+        postalcode: '', //zip
+        timezone: '', //timezone
+        geonameId: 0, //necessary?
+    },
+    as: {
+        as: 0,
+        name: '',
+        route: '',
+        domain: '',
+        type: ''
+    },
+    isp: '' //isp
+    }
 )
 
-const [latitude, setLatitude] = useState('');
-const [longitude, setLongitude] = useState('');
+const [apiData, setAPIData] = useState({
+        latitude: 0,
+        longitude: 0,
+        isp: '',
+        ip: '',
+        city: '',
+        state: '',
+        timezone: '',
+        zip: ''
+}
+)
+
 
 // runs at first and sets input state
 useEffect(() => {
@@ -96,17 +126,11 @@ function AppProviders({ children }) {
 
         return (
             // Step 2: Provide the context (add a value prop)
-                    <ToDoContext.Provider value={{ toDos, toggleToDo, addToDo, editToDo, deleteToDo }}>
                         <ResponseContext.Provider value ={{apiData}}>
                             <IPContext.Provider value={{input}}>
-
-                            </IPContext.Provider>
-
-                        </ResponseContext.Provider>
-    
                     {children}
-    
-                    </ToDoContext.Provider>
+                                </IPContext.Provider>
+                        </ResponseContext.Provider>
     
         )
     }

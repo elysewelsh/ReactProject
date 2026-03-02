@@ -1,4 +1,4 @@
-import { ResponseContext } from "../context/MapContext";
+import { ResponseContext } from "../context/AppProvider";
 
 const Map = () => {
     const { apiData } = useContext(ResponseContext);

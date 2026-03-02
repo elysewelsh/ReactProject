@@ -3,7 +3,7 @@ export default function SearchInput () {
         <form>
             <input
             type="text"
-            placeholder="Search for your IP"
+            placeholder="Search for any ID address or domain"
             >
             </input>
             <button>Submit</button>
