@@ -2,12 +2,16 @@ import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Map from './components/Map'
 import ValidateIP from './utils/ValidateIP'
+import FormatAPIData from './utils/FormatAPIData'
 
 import './App.css'
 
 function App() {
 //set to user's IP address initally
-const [input, setInput] = useState(formattedUserIP)
+const [input, setInput] = useState('')
+
+const [latitude, setLatitude] = useState('');
+const [longitude, setLongitude] = useState('');
 
 useEffect(() => {
 //get user IP address
@@ -44,9 +48,6 @@ if (error) {
 // obvi needs to be re-formatted without types, add state
 return FormatAPIData(data);
 },[input])
-
-
-  
 
   return (
     <>

@@ -1,7 +1,9 @@
+
+
 const Map = () => {
   const mapRef = useRef(null);
-  const latitude = 51.505;
-  const longitude = -0.09;
+  const latitude = latitude;
+  const longitude = longitude;
 
   return ( 
     // Make sure you set the height and width of the map container otherwise the map won't show
@@ -16,3 +18,11 @@ const Map = () => {
 };
 
 export default Map;
+
+// // just in case it's needed before re-rendering like in last project
+// function removeMapContainer(){
+//     var container = document.getElementById('map') as HTMLElement;
+//     if (container) {
+//         container.outerHTML = '<div id="map"></div';
+//     }
+// };
