@@ -3,6 +3,9 @@
 // would move all states to here
 
 import { createContext, useState, useEffect } from "react"
+import ErrorHandler from '../utils/ErrorHandler'
+import ValidateIP from '../utils/ValidateIP'
+import FormatAPIData from '../utils/FormatAPIData'
 
 export const IPContext = createContext('')
 export const ResponseContext = createContext({})
@@ -88,8 +91,6 @@ setAPIData(responseAPI);
 
 
 
-
-
 function AppProviders({ children }) {
 
         const [toDos, setToDos] = useState(() => {
@@ -127,9 +128,9 @@ function AppProviders({ children }) {
         return (
             // Step 2: Provide the context (add a value prop)
                         <ResponseContext.Provider value ={{apiData}}>
-                            <IPContext.Provider value={{input}}>
-                    {children}
-                                </IPContext.Provider>
+                            <IPContext.Provider value={{input, handleSearch}}>
+                                {children}
+                            </IPContext.Provider>
                         </ResponseContext.Provider>
     
         )
