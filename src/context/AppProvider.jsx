@@ -127,7 +127,7 @@ function AppProviders({ children }) {
 
         return (
             // Step 2: Provide the context (add a value prop)
-                        <ResponseContext.Provider value ={{apiData}}>
+                        <ResponseContext.Provider value ={{apiResponse, apiData}}>
                             <IPContext.Provider value={{input, handleSearch}}>
                                 {children}
                             </IPContext.Provider>
