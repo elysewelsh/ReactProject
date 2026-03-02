@@ -1,14 +1,10 @@
-// import { handleRequest } from "../api/api";
-// import { DataError, handleError } from "../utils/errorHandler";
-// import { fillElements } from "../models/fillElements";
-
 import { ResponseContext } from "../context/AppProvider";
 
-export function formatAPIdata () {
+export function formatAPIdata (data) {
 
-    const { apiResponse, setAPIData } = useContext(ResponseContext)
+    const { setAPIData } = useContext(ResponseContext)
 
-    if (apiResponse  !== "undefined") {
+    if (data  !== "undefined") {
         setAPIData({
                 latitude: 0,
                 longitude: 0,
@@ -19,72 +15,52 @@ export function formatAPIdata () {
                 timezone: '',
                 zip: ''
             });
-        apiResponse.location.lat &&
+        data.location.lat &&
             setAPIData({
                 ...prevAPIData, 
-                latitude: apiResponse.location.lat
+                latitude: data.location.lat
             });
-        apiResponse.location.lng &&
+        data.location.lng &&
             setAPIData({
                 ...prevAPIData, 
-                longitude: apiResponse.location.lng
+                longitude: data.location.lng
             });
-        apiResponse.location.city &&
+        data.location.city &&
             setAPIData({
                 ...prevAPIData, 
-                city: apiResponse.location.city
+                city: data.location.city
             });
-        apiResponse.location.region &&
+        data.location.region &&
             setAPIData({
                 ...prevAPIData, 
-                state: apiResponse.location.region
+                state: data.location.region
             });
-        apiResponse.location.country &&
+        data.location.country &&
             setAPIData({
                 ...prevAPIData, 
-                country: apiResponse.location.country
+                country: data.location.country
             });
-        apiResponse.location.postalcode &&
+        data.location.postalcode &&
             setAPIData({
                 ...prevAPIData, 
-                zip: apiResponse.location.postalcode
+                zip: data.location.postalcode
             });
-        apiResponse.location.timezone &&
+        data.location.timezone &&
             setAPIData({
                 ...prevAPIData, 
-                timezone: apiResponse.location.timezone
+                timezone: data.location.timezone
             });
-        apiResponse.ip &&
+        data.ip &&
             setAPIData({
                 ...prevAPIData, 
-                ip: apiResponse.ip
+                ip: data.ip
             });
-        apiResponse.isp &&
+        data.isp &&
             setAPIData({
                 ...prevAPIData, 
-                isp: apiResponse.isp
+                isp: data.isp
             });
         } else {
             throw error("API data is undefined");
         }
-}
-
-    // const handleAdd = (e) => {
-    //     e.preventDefault();
-    //     addToDo(input);
-    //     setInput('');
-    // }
-
-    //     const handleChange = (newCount) => {
-    //     setCounter(newCount);
-    //     setHistory(prevHistory => [...prevHistory, newCount]);
-
-    // };
-
-                    // let coordinates = {
-                    //     lat: reply.location.lat,
-                    //     lng: reply.location.lng
-                    //     };
-                    // let pageFillInfo = (coordinates, reply.isp, reply.ip, reply.location.city, reply.location.region, reply.location.timezone, reply.location.postalcode);
-                    // if (pageFillInfo !== "undefined") {
-                    // return pageFillInfo;
+};
