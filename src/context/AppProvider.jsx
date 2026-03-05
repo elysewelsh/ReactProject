@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react"
 import isValidIP from '../utils/ValidateIP'
-import formatAPIData from '../utils/FormatAPIData'
+// import formatAPIData from '../utils/FormatAPIData'
 import useFetch from '../hooks/useFetch'
 import useDebounce from '../hooks/useDebounce'
 const API_KEY = import.meta.env.VITE_API_KEY
@@ -12,7 +12,7 @@ export const ResponseContext = createContext({})
 function AppProviders({ children }) {
 
     const [query, setQuery] = useState('');
-    const [url, setUrl] = useState('');
+    const [url, setUrl] = useState('https://api.ipify.org?format=json');
     // const [loading, setLoading] = useState(false);
     // const [error, setError] = useState('');
 
@@ -69,14 +69,55 @@ function AppProviders({ children }) {
     const { data, loading, setLoading, error, setError } = useFetch(url);
 
 // runs at first and sets input state
-    useEffect(() => {
-        //get user IP address
-        setUrl('https://api.ipify.org?format=json');
-    }, [])
+    // useEffect(() => {
+    //     //get user IP address
+    //     setUrl('https://api.ipify.org?format=json');
+    // }, [])
 
 // runs when data returns and sets state of returned data to use in Map
     useEffect(() => {
-        formatAPIData(data);
+        // formatAPIData(data);
+        // setAPIData({
+        //         latitude: 0,
+        //         longitude: 0,
+        //         isp: '',
+        //         ip: '',
+        //         city: '',
+        //         state: '',
+        //         timezone: '',
+        //         zip: ''
+        //     });
+        let apiDataT = {
+            latitude: 0,
+            longitude: 0,
+            isp: '',
+            ip: '',
+            city: '',
+            state: '',
+            timezone: '',
+            zip: ''
+        };
+        console.log(data);
+        if (data  !== "undefined") {
+            data.location.lat ? apiDataT.latitude = data.location.lat : apiDataT.latitude = 0;
+            data.location.lng ? apiDataT.longitude = data.location.lng : apiDataT.longitude = 0;
+            data.isp ? apiDataT.isp = data.isp : apiDataT.isp = '';
+            data.ip ? apiDataT.ip = data.ip : apiDataT.ip = '';
+            data.location.city ? apiDataT.city = data.location.city : apiDataT.city = '';
+            data.location.region ? apiDataT.state = data.location.region : apiDataT.state = '';
+            data.location.timezone ? apiDataT.timezone = data.location.timezone : apiDataT.timezone = '';
+            data.location.postalcode ? apiDataT.zip = data.location.postalcode : apiDataT.zip = '';
+            setAPIData({
+                latitude: apiDataT.latitude,
+                longitude: apiDataT.longitude,
+                isp: apiDataT.isp,
+                ip: apiDataT.ip,
+                city: apiDataT.city,
+                state: apiDataT.state,
+                timezone: apiDataT.timezone,
+                zip: apiDataT.zip
+            });
+    }
     }, [data])
 
     useEffect(() => {

@@ -1,20 +1,20 @@
-import { useContext } from 'react'
-import { ResponseContext } from "../context/AppProvider"
+// import { useContext } from 'react'
+// import { ResponseContext } from "../context/AppProvider"
 
-export default function InfoBar () {
+export default function InfoBar (apiData) {
 
-    const { apiData } = useContext(ResponseContext);
+    // const { apiData } = useContext(ResponseContext);
 
     return (
         <>
         <div>
             <div>
                 <h2>IP Address</h2>
-                <p>{apiData.ipAddress}</p>
+                <p>{apiData.ip}</p>
             </div>
             <div>
                 <h2>Location</h2>
-                <p>{apiData.City}, {apiData.region}</p>
+                <p>{apiData.city}, {apiData.state}</p>
             </div>
             <div>
                 <h2>Timezone</h2>
@@ -22,7 +22,7 @@ export default function InfoBar () {
             </div>
             <div>
                 <h2>ISP</h2>
-                <p>{apiData.ISP}</p>
+                <p>{apiData.isp}</p>
             </div>
         </div>
         </>

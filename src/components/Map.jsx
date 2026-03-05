@@ -1,9 +1,9 @@
 import { useContext, useRef } from 'react'
-import { ResponseContext } from "../context/AppProvider";
+// import { ResponseContext } from "../context/AppProvider";
 import { MapContainer, TileLayer } from 'react-leaflet'
 
-const Map = () => {
-    const { mapData } = useContext(ResponseContext);
+const Map = ({mapData}) => {
+    // const { mapData } = useContext(ResponseContext);
 
     const mapRef = useRef(null);
     const latitude = mapData.latitude;

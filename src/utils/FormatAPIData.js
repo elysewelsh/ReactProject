@@ -1,32 +1,32 @@
-import { ResponseContext } from "../context/AppProvider";
-import { useContext } from 'react';
+// import { ResponseContext } from "../context/AppProvider";
+// import { useContext } from 'react';
 
-export default function formatAPIdata (data) {
+// export default function formatAPIdata (data) {
 
-    const { setAPIData } = useContext(ResponseContext)
+//     const { setAPIData } = useContext(ResponseContext)
 
-    if (data  !== "undefined") {
-        setAPIData({
-                latitude: 0,
-                longitude: 0,
-                isp: '',
-                ip: '',
-                city: '',
-                state: '',
-                timezone: '',
-                zip: ''
-            });
+//     if (data  !== "undefined") {
+//         setAPIData({
+//                 latitude: 0,
+//                 longitude: 0,
+//                 isp: '',
+//                 ip: '',
+//                 city: '',
+//                 state: '',
+//                 timezone: '',
+//                 zip: ''
+//             });
 
-            setAPIData({
-                latitude: data.location.lat? data.location.lat : 0,
-                longitude: data.location.lng? data.location.lng : 0,
-                isp: data.isp? data.isp : '',
-                ip: data.ip? data.ip : '',
-                city: data.location.city? data.location.city : '',
-                state: data.location.region? data.location.region : '',
-                timezone: data.location.timezone? data.location.timezone : '',
-                zip: data.location.postalcode? data.location.postalcode : ''
-            });
+//             setAPIData({
+//                 latitude: data.location.lat? data.location.lat : 0,
+//                 longitude: data.location.lng? data.location.lng : 0,
+//                 isp: data.isp? data.isp : '',
+//                 ip: data.ip? data.ip : '',
+//                 city: data.location.city? data.location.city : '',
+//                 state: data.location.region? data.location.region : '',
+//                 timezone: data.location.timezone? data.location.timezone : '',
+//                 zip: data.location.postalcode? data.location.postalcode : ''
+//             });
         // data.location.lat &&
         //     setAPIData({
         //         ...prevAPIData, 
