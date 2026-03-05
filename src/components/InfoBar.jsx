@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { ResponseContext } from "../context/AppProvider"
 
 export default function InfoBar () {

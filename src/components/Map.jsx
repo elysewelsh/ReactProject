@@ -1,11 +1,13 @@
+import { useContext, useRef } from 'react'
 import { ResponseContext } from "../context/AppProvider";
+import { MapContainer, TileLayer } from 'react-leaflet'
 
 const Map = () => {
-    const { apiData } = useContext(ResponseContext);
+    const { mapData } = useContext(ResponseContext);
 
     const mapRef = useRef(null);
-    const latitude = apiData.latitude;
-    const longitude = apiData.longitude;
+    const latitude = mapData.latitude;
+    const longitude = mapData.longitude;
 
   return ( 
     // Make sure you set the height and width of the map container otherwise the map won't show

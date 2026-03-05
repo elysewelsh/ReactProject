@@ -2,3 +2,7 @@ https://medium.com/@timndichu/getting-started-with-leaflet-js-and-react-renderin
 https://medium.com/@sankalpa115/usedebounce-hook-in-react-2c71f02ff8d8
 https://react.dev/learn/updating-objects-in-state
 https://youtu.be/QgLLC-rgwKI
+Module 10 FruitSearch activity
+https://stackoverflow.com/questions/62378796/cannot-destructure-property-of-object-from-context#62378895 (re-named input to query)
+https://react.dev/warnings/invalid-hook-call-warning
+

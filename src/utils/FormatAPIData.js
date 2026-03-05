@@ -1,6 +1,7 @@
 import { ResponseContext } from "../context/AppProvider";
+import { useContext } from 'react';
 
-export function formatAPIdata (data) {
+export default function formatAPIdata (data) {
 
     const { setAPIData } = useContext(ResponseContext)
 
@@ -61,6 +62,6 @@ export function formatAPIdata (data) {
                 isp: data.isp
             });
         } else {
-            throw error("API data is undefined");
+            setError("API data is undefined");
         }
 };

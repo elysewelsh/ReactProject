@@ -2,6 +2,7 @@
 import Header from './components/Header'
 import InfoBar from './components/InfoBar'
 import Map from './components/Map'
+import { IPContext, ResponseContext } from './context/AppProvider'
 
 import './App.css'
 import AppProviders from './context/AppProvider'
@@ -12,7 +13,7 @@ function App() {
 
   return (
     <AppProviders>
-        <Header />
+        <Header/>
         <InfoBar />
         <Map />
     </AppProviders>
