@@ -1,7 +1,7 @@
 // import { useContext } from 'react'
 // import { ResponseContext } from "../context/AppProvider"
 
-export default function InfoBar (apiData) {
+export default function InfoBar ({apiData}) {
 
     // const { apiData } = useContext(ResponseContext);
 

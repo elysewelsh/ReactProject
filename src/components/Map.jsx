@@ -1,14 +1,24 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 // import { ResponseContext } from "../context/AppProvider";
-import { MapContainer, TileLayer } from 'react-leaflet'
+import { MapContainer, TileLayer, useMap } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+
+const UpdateMap = ({ lat, lng }) => {
+    const map = useMap();
+    useEffect(() => {
+        if (lat !== 0) {
+            map.setView([lat,lng]);
+        }
+    }, [lat,lng, map]);
+    return;
+};
 
 const Map = ({mapData}) => {
     // const { mapData } = useContext(ResponseContext);
-
+    const mapRef = useRef(null);
     if (!mapData) return;
         if (mapData.latitude !== 0) {
             console.log(mapData);
-    const mapRef = useRef(null);
     const latitude = mapData.latitude;
     const longitude = mapData.longitude;
         
@@ -19,7 +29,7 @@ const Map = ({mapData}) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {/* Additional map layers or components can be added here */}
+        <UpdateMap lat={latitude} lng={longitude}/>
       </MapContainer>
   );
 }
