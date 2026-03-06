@@ -1,28 +1,18 @@
-// import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import InfoBar from './components/InfoBar'
 import Map from './components/Map'
-// import { IPContext, ResponseContext } from './context/AppProvider'
-
 import './App.css'
-// import AppProviders from './context/AppProvider'
-
 import { useState, useEffect } from "react"
-// import isValidIP from './utils/ValidateIP'
-// import formatAPIData from '../utils/FormatAPIData'
-// import useFetch from './hooks/useFetch'
-// import useDebounce from './hooks/useDebounce'
+import BigBG from './assets/pattern-bg-desktop.png'
+
 const API_KEY = import.meta.env.VITE_API_KEY
-// const options = {};
 
 function App() {
-  const [data, setData] = useState("undefined");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+    const [data, setData] = useState("undefined");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [query, setQuery] = useState('');
     const [url, setUrl] = useState(null);
-    // const [loading, setLoading] = useState(false);
-    // const [error, setError] = useState('');
 
 
     const [mapData, setMapData] = useState({
@@ -34,7 +24,7 @@ function App() {
             state: '',
             timezone: '',
             zip: ''
-    }
+        }
     );
 
     const [apiData, setAPIData] = useState({
@@ -46,82 +36,65 @@ function App() {
             state: '',
             timezone: '',
             zip: ''
-    }
-    )
-
-    // const debouncedInput = useDebounce(query, 3000);
-
-    // const { data, loading, setLoading, error, setError } = useFetch(url);
-        // const { data } = useFetch(url);
-
-useEffect (() => {
-    async function getFirstIP () {
-    const response = await fetch('https://api.ipify.org?format=json');
-    const firstIP = await response.json();
-    console.log(firstIP.ip);
-    setQuery(firstIP.ip);
-    };
-    getFirstIP();
-}, [])
-
-  useEffect(() => {
-    if (!url) return; // Don't fetch if URL is not provided
- 
-    const controller = new AbortController(); // For cleanup
-    // setData(null); // Reset data on new fetch
-    // setError(null); // Reset error on new fetch
-    // setLoading(true);
- 
-    const fetchData = async () => {
-        
-      try {
-        const response = await fetch(url, { signal: controller.signal });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const result = await response.json();
-        // const stringData = JSON.stringify(result)
-        // setData(stringData);
-        if (result.location.lat !== null || result.location.lat !== "undefined") {
-        setData(result);
-        } else {
-            console.log(result);
+    );
+
+    useEffect (() => {
+        async function getFirstIP () {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const firstIP = await response.json();
+        console.log(firstIP.ip);
+        setQuery(firstIP.ip);
         };
-      } catch (err) {
-        if (err.name !== 'AbortError') { // Don't set error if aborted
-          setError(err);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
- 
-    fetchData();
+        getFirstIP();
+    }, [])
 
- 
+    useEffect(() => {
+        if (!url) return; // Don't fetch if URL is not provided
+    
+        const controller = new AbortController(); // For cleanup
+        
+        setError(null); // Reset error on new fetch
+        setLoading(true);
+    
+        const fetchData = async () => {
+            
+            try {
+                const response = await fetch(url, { signal: controller.signal });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+
+                if (result.location.lat !== null || result.location.lat !== "undefined") {
+                    setData(result);
+                } else {
+                    console.log(result);
+                };
+            } catch (err) {
+                if (err.name !== 'AbortError') { // Don't set error if aborted
+                    setError(err);
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+        fetchData();
+
     // Cleanup function
-    return () => {
-      controller.abort();
-    };
-  }, [url]);
+        return () => {
+        controller.abort();
+        };
+    }, [url]);
 
 
 
 // runs when data returns and sets state of returned data to use in Map
     useEffect(() => {
         if (!data) return;
-        // formatAPIData(data);
-        // setAPIData({
-        //         latitude: 0,
-        //         longitude: 0,
-        //         isp: '',
-        //         ip: '',
-        //         city: '',
-        //         state: '',
-        //         timezone: '',
-        //         zip: ''
-        //     });
-        // console.log("second useEffect:" + data)
+
         let apiDataT = {
             latitude: 0,
             longitude: 0,
@@ -132,7 +105,7 @@ useEffect (() => {
             timezone: '',
             zip: ''
         };
-        // console.log(data);
+
         if (!data || data !== "undefined") {
             console.log(data);
             data.location.lat ? apiDataT.latitude = data.location.lat : apiDataT.latitude = 0;
@@ -169,7 +142,7 @@ useEffect (() => {
     };
 
 // runs when input changes, returns data from useFetch
-        useEffect(() => {
+    useEffect(() => {
         if (!query) return;
         // function isValidIP (ip) {
         // const ipRegex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
@@ -189,13 +162,22 @@ useEffect (() => {
     }, [query]);
 
   return (
-    // <AppProviders>
     <>
-        <Header handleSubmit={handleSubmit}/>
-        <InfoBar apiData={apiData}/>
+        <header 
+            className="absolute w-full h-[40%] bg-cover bg-center bg-no-repeat z-10"
+            style={{backgroundImage: `url(${BigBG})`}}
+        >
+            <Header 
+                handleSubmit={handleSubmit}
+                apiData={apiData}
+                error={error} 
+                loading={loading}
+            />
+        </header>
+        <div className="relative -z-10">
         <Map mapData={mapData}/>
+        </div>
     </>
-    // </AppProviders>
   )
 }
 

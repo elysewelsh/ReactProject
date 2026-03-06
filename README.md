@@ -9,6 +9,11 @@ https://geo.ipify.org/docs
 https://react-leaflet.js.org/docs/api-components/
 https://react-leaflet.js.org/docs/api-map/
 https://react-leaflet.js.org/docs/start-setup/
+https://create-react-app.dev/docs/adding-images-fonts-and-files/
+https://stackabuse.com/importing-images-with-react/
+https://www.codestudy.net/blog/background-image-in-tailwindcss-using-dynamic-url-react-js/
+https://tailwindcss.com/
+
 
 
 
