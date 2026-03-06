@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
  
 export function useFetchData(url, options) {
-  const [data, setData] = useState(null);
+  const [responseData, setResponseData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
  
@@ -9,7 +9,7 @@ export function useFetchData(url, options) {
     if (!url) return; // Don't fetch if URL is not provided
  
     const controller = new AbortController(); // For cleanup
-    setData(null); // Reset data on new fetch
+    setResponseData(null); // Reset data on new fetch
     setError(null); // Reset error on new fetch
     setLoading(true);
  
@@ -22,7 +22,7 @@ export function useFetchData(url, options) {
         const result = await response.json();
         // const stringData = JSON.stringify(result)
         // setData(stringData);
-        setData(result);
+        setResponseData(result);
       } catch (err) {
         if (err.name !== 'AbortError') { // Don't set error if aborted
           setError(err);
@@ -33,13 +33,15 @@ export function useFetchData(url, options) {
     };
  
     fetchData();
+
  
     // Cleanup function
     return () => {
       controller.abort();
     };
   }, [url, options]); // Re-run if url or options change
- 
+    console.log("api result:" + responseData)
+  const data = responseData;
   return { data, loading, error };
 }
  

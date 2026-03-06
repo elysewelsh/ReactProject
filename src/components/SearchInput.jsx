@@ -1,15 +1,18 @@
 import  { IPContext } from '../context/AppProvider'
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 
 
 
-export default function SearchInput () {
+export default function SearchInput ({setQuery}) {
 
     const [input, setInput] = useState('');
-    const {setQuery} = useContext(IPContext);
-
+    // const {setQuery} = useContext(IPContext);
+function handle (e) {
+e.preventDefault();
+setQuery(input)
+}
     return (
-            <form className="flex flex-col justify-start max-w-[30vw] m-4 p-4 gap-3 border-1 rounded-xl" onSubmit={() => setQuery(input)}>
+            <form className="flex flex-col justify-start max-w-[30vw] m-4 p-4 gap-3 border-1 rounded-xl" onSubmit={handle}>
                 <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}

@@ -10,40 +10,20 @@ import './App.css'
 import { useState, useEffect } from "react"
 import isValidIP from './utils/ValidateIP'
 // import formatAPIData from '../utils/FormatAPIData'
-import useFetch from './hooks/useFetch'
-import useDebounce from './hooks/useDebounce'
+// import useFetch from './hooks/useFetch'
+// import useDebounce from './hooks/useDebounce'
 const API_KEY = import.meta.env.VITE_API_KEY
+const options = {};
 
 function App() {
-
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
     const [query, setQuery] = useState('');
-    const [url, setUrl] = useState('https://api.ipify.org?format=json');
+    const [url, setUrl] = useState('');
     // const [loading, setLoading] = useState(false);
     // const [error, setError] = useState('');
 
-    //probably don't need this state
-    // const [apiResponse, setAPIResponse] = useState({
-    //     ip: '', //ip address
-    //     location: {
-    //         country: '',
-    //         region: '', //state
-    //         city: '', //city
-    //         lat: 0,
-    //         lng: 0,
-    //         postalcode: '', //zip
-    //         timezone: '', //timezone
-    //         geonameId: 0
-    //     },
-    //     as: {
-    //         as: 0,
-    //         name: '',
-    //         route: '',
-    //         domain: '',
-    //         type: ''
-    //     },
-    //     isp: '' //isp
-    //     }
-    // )
 
     const [mapData, setMapData] = useState({
             latitude: 0,
@@ -69,10 +49,52 @@ function App() {
     }
     )
 
-    const debouncedInput = useDebounce(query, 3000);
+    // const debouncedInput = useDebounce(query, 3000);
 
     // const { data, loading, setLoading, error, setError } = useFetch(url);
-        const { data } = useFetch(url);
+        // const { data } = useFetch(url);
+
+useEffect (() => {
+    setUrl('https://api.ipify.org?format=json');
+}, [])
+
+  useEffect(() => {
+    if (!url) return; // Don't fetch if URL is not provided
+ 
+    const controller = new AbortController(); // For cleanup
+    setData(null); // Reset data on new fetch
+    setError(null); // Reset error on new fetch
+    setLoading(true);
+ 
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url, { ...options, signal: controller.signal });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        // const stringData = JSON.stringify(result)
+        // setData(stringData);
+        setData(result);
+        console.log(result);
+      } catch (err) {
+        if (err.name !== 'AbortError') { // Don't set error if aborted
+          setError(err);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+ 
+    fetchData();
+
+ 
+    // Cleanup function
+    return () => {
+      controller.abort();
+    };
+  }, [url, options]);
+
 
 
 // runs when data returns and sets state of returned data to use in Map
@@ -88,6 +110,7 @@ function App() {
         //         timezone: '',
         //         zip: ''
         //     });
+        console.log("second useEffect:" + data)
         let apiDataT = {
             latitude: 0,
             longitude: 0,
@@ -99,7 +122,8 @@ function App() {
             zip: ''
         };
         console.log(data);
-        if (data  !== "undefined") {
+        if (data && data.location) {
+            console.log("insideif");
             data.location.lat ? apiDataT.latitude = data.location.lat : apiDataT.latitude = 0;
             data.location.lng ? apiDataT.longitude = data.location.lng : apiDataT.longitude = 0;
             data.isp ? apiDataT.isp = data.isp : apiDataT.isp = '';
@@ -129,24 +153,32 @@ function App() {
         }
     }, [apiData])
 
+    function handleSubmit (input) {
+        setQuery(input);
+        console.log(input);
+    };
+
 // runs when input changes, returns data from useFetch
         useEffect(() => {
         //load new image every time input changes
-        if (!debouncedInput) {
+        if (!query) {
             setError("Please input a valid IP address")
+            console.log("there's an error")
         }
-        if (isValidIP(debouncedInput)) {
+        if (isValidIP(query)) {
+            console.log("insideloading");
             setLoading(true);
-            setUrl('https://geo.ipify.org/api/v2/country?apiKey='+API_KEY+'&ipAddress='+debouncedInput);  
+            setUrl('https://geo.ipify.org/api/v2/country?apiKey='+API_KEY+'&ipAddress='+query);  
         } else {
             setError("Not a valid IP format")
+            console.log("there's a valid IP format errrrrrrror")
         }   
-    }, [debouncedInput]);
+    }, [query]);
 
   return (
     // <AppProviders>
     <>
-        <Header/>
+        <Header handleSubmit={handleSubmit}/>
         <InfoBar apiData={apiData}/>
         <Map mapData={mapData}/>
     </>
@@ -155,3 +187,28 @@ function App() {
 }
 
 export default App
+
+
+    //probably don't need this state
+    // const [apiResponse, setAPIResponse] = useState({
+    //     ip: '', //ip address
+    //     location: {
+    //         country: '',
+    //         region: '', //state
+    //         city: '', //city
+    //         lat: 0,
+    //         lng: 0,
+    //         postalcode: '', //zip
+    //         timezone: '', //timezone
+    //         geonameId: 0
+    //     },
+    //     as: {
+    //         as: 0,
+    //         name: '',
+    //         route: '',
+    //         domain: '',
+    //         type: ''
+    //     },
+    //     isp: '' //isp
+    //     }
+    // )
