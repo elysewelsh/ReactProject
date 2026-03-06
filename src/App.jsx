@@ -8,19 +8,19 @@ import './App.css'
 // import AppProviders from './context/AppProvider'
 
 import { useState, useEffect } from "react"
-import isValidIP from './utils/ValidateIP'
+// import isValidIP from './utils/ValidateIP'
 // import formatAPIData from '../utils/FormatAPIData'
 // import useFetch from './hooks/useFetch'
 // import useDebounce from './hooks/useDebounce'
 const API_KEY = import.meta.env.VITE_API_KEY
-const options = {};
+// const options = {};
 
 function App() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState("undefined");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
     const [query, setQuery] = useState('');
-    const [url, setUrl] = useState('');
+    const [url, setUrl] = useState(null);
     // const [loading, setLoading] = useState(false);
     // const [error, setError] = useState('');
 
@@ -55,28 +55,38 @@ function App() {
         // const { data } = useFetch(url);
 
 useEffect (() => {
-    setUrl('https://api.ipify.org?format=json');
+    async function getFirstIP () {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const firstIP = await response.json();
+    console.log(firstIP.ip);
+    setQuery(firstIP.ip);
+    };
+    getFirstIP();
 }, [])
 
   useEffect(() => {
     if (!url) return; // Don't fetch if URL is not provided
  
     const controller = new AbortController(); // For cleanup
-    setData(null); // Reset data on new fetch
-    setError(null); // Reset error on new fetch
-    setLoading(true);
+    // setData(null); // Reset data on new fetch
+    // setError(null); // Reset error on new fetch
+    // setLoading(true);
  
     const fetchData = async () => {
+        
       try {
-        const response = await fetch(url, { ...options, signal: controller.signal });
+        const response = await fetch(url, { signal: controller.signal });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const result = await response.json();
         // const stringData = JSON.stringify(result)
         // setData(stringData);
+        if (result.location.lat !== null || result.location.lat !== "undefined") {
         setData(result);
-        console.log(result);
+        } else {
+            console.log(result);
+        };
       } catch (err) {
         if (err.name !== 'AbortError') { // Don't set error if aborted
           setError(err);
@@ -93,12 +103,13 @@ useEffect (() => {
     return () => {
       controller.abort();
     };
-  }, [url, options]);
+  }, [url]);
 
 
 
 // runs when data returns and sets state of returned data to use in Map
     useEffect(() => {
+        if (!data) return;
         // formatAPIData(data);
         // setAPIData({
         //         latitude: 0,
@@ -110,7 +121,7 @@ useEffect (() => {
         //         timezone: '',
         //         zip: ''
         //     });
-        console.log("second useEffect:" + data)
+        // console.log("second useEffect:" + data)
         let apiDataT = {
             latitude: 0,
             longitude: 0,
@@ -121,9 +132,9 @@ useEffect (() => {
             timezone: '',
             zip: ''
         };
-        console.log(data);
-        if (data && data.location) {
-            console.log("insideif");
+        // console.log(data);
+        if (!data || data !== "undefined") {
+            console.log(data);
             data.location.lat ? apiDataT.latitude = data.location.lat : apiDataT.latitude = 0;
             data.location.lng ? apiDataT.longitude = data.location.lng : apiDataT.longitude = 0;
             data.isp ? apiDataT.isp = data.isp : apiDataT.isp = '';
@@ -142,15 +153,14 @@ useEffect (() => {
                 timezone: apiDataT.timezone,
                 zip: apiDataT.zip
             });
-    }
+        }
     }, [data])
 
     useEffect(() => {
+        if (!apiData) return;
         if (apiData.latitude !== 0) {
             setMapData(apiData)
-        } else {
-            setQuery(apiData.ip)
-        }
+        } return;
     }, [apiData])
 
     function handleSubmit (input) {
@@ -160,19 +170,22 @@ useEffect (() => {
 
 // runs when input changes, returns data from useFetch
         useEffect(() => {
+        if (!query) return;
+        // function isValidIP (ip) {
+        // const ipRegex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+        // return ipRegex.test(ip);
+        // }
         //load new image every time input changes
-        if (!query) {
-            setError("Please input a valid IP address")
-            console.log("there's an error")
-        }
-        if (isValidIP(query)) {
-            console.log("insideloading");
+
+        // if (isValidIP(query)) {
+            console.log("valid query loading:"+ query);
+            setError('');
             setLoading(true);
-            setUrl('https://geo.ipify.org/api/v2/country?apiKey='+API_KEY+'&ipAddress='+query);  
-        } else {
-            setError("Not a valid IP format")
-            console.log("there's a valid IP format errrrrrrror")
-        }   
+            setUrl('https://geo.ipify.org/api/v2/country,city?apiKey='+API_KEY+'&ipAddress='+query);
+        // } else {
+        //     setError("Not a valid IP format")
+        //     console.log("there's a valid IP format errrrrrrror")
+        // }   
     }, [query]);
 
   return (
@@ -189,8 +202,7 @@ useEffect (() => {
 export default App
 
 
-    //probably don't need this state
-    // const [apiResponse, setAPIResponse] = useState({
+// this is how the api response comes back from the api geo request{
     //     ip: '', //ip address
     //     location: {
     //         country: '',
