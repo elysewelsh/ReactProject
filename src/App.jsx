@@ -164,7 +164,7 @@ function App() {
   return (
     <>
         <header 
-            className="absolute w-full h-[40%] bg-cover bg-center bg-no-repeat z-10"
+            className="absolute w-full h-[40%] bg-cover bg-center bg-no-repeat z-10 font-sans"
             style={{backgroundImage: `url(${BigBG})`}}
         >
             <Header 

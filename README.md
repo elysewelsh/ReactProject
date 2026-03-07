@@ -13,6 +13,8 @@ https://create-react-app.dev/docs/adding-images-fonts-and-files/
 https://stackabuse.com/importing-images-with-react/
 https://www.codestudy.net/blog/background-image-in-tailwindcss-using-dynamic-url-react-js/
 https://tailwindcss.com/
+https://dev.to/coderc/how-to-add-external-fonts-with-tailwind-css-and-reactjs-4h4g
+https://medium.com/@rohantgeorge05/goodbye-tailwind-config-js-tailwindcss-v4s-new-css-first-setup-explained-with-react-vite-496aabdd1457
 
 
 

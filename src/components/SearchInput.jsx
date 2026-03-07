@@ -11,13 +11,14 @@ export default function SearchInput ({setQuery}) {
     }
     
     return (
-            <form className="flex flex-col justify-start max-w-[30vw] m-4 p-4 gap-3 border-1 rounded-xl" onSubmit={handle}>
+            <form className="flex flex-row justify-center min-w-[30vw] h-[3.5rem] m-4" onSubmit={handle}>
                 <input
+                className="bg-white flex-grow text-gray-800 px-4 rounded-l-xl"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Search for any IP address or domain"
                 />
-                <button type="submit">
+                <button className="h-[100%] right-0 rounded-r-xl"type="submit">
                     <img src={Arrow}/>
                 </button>
             </form>
