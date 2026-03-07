@@ -12,8 +12,8 @@ export default function Header({handleSubmit, apiData, error, loading}) {
             <div className="w-[70%] justify-self-center">
             <InfoBar apiData={apiData}/>
             </div>
-            {loading ? <span>{loading}</span> : <></>}
-            {error ? <span>{error}</span> : <></>}
+            {/* {loading ? <span>{loading}</span> : <></>}
+            {error ? <span>{error}</span> : <></>} */}
         </>
     )
 }

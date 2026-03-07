@@ -3,7 +3,9 @@ import InfoBar from './components/InfoBar'
 import Map from './components/Map'
 import './App.css'
 import { useState, useEffect } from "react"
+import useWindowSize from './hooks/useWindowSize'
 import BigBG from './assets/pattern-bg-desktop.png'
+import SmallBG from './assets/pattern-bg-mobile.png'
 
 const API_KEY = import.meta.env.VITE_API_KEY
 
@@ -161,11 +163,19 @@ function App() {
         // }   
     }, [query]);
 
+    const dimensions = useWindowSize();
+    let bgImage;
+    if (dimensions.width >= 768) {
+        bgImage = BigBG;
+    } else {
+        bgImage = SmallBG;
+    }
+
   return (
     <>
         <header 
             className="absolute w-full h-[40%] bg-cover bg-center bg-no-repeat z-10 font-sans"
-            style={{backgroundImage: `url(${BigBG})`}}
+            style={{backgroundImage: `url(${bgImage})`}}
         >
             <Header 
                 handleSubmit={handleSubmit}
