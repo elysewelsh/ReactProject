@@ -1,5 +1,4 @@
 import Header from './components/Header'
-import InfoBar from './components/InfoBar'
 import Map from './components/Map'
 import './App.css'
 import { useState, useEffect } from "react"
@@ -146,21 +145,19 @@ function App() {
 // runs when input changes, returns data from useFetch
     useEffect(() => {
         if (!query) return;
-        // function isValidIP (ip) {
-        // const ipRegex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-        // return ipRegex.test(ip);
-        // }
-        //load new image every time input changes
-
-        // if (isValidIP(query)) {
+        function isValidIP (ip) {
+        const ipRegex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+        return ipRegex.test(ip);
+        }
+        if (isValidIP(query)) {
             console.log("valid query loading:"+ query);
             setError('');
             setLoading(true);
             setUrl('https://geo.ipify.org/api/v2/country,city?apiKey='+API_KEY+'&ipAddress='+query);
-        // } else {
-        //     setError("Not a valid IP format")
-        //     console.log("there's a valid IP format errrrrrrror")
-        // }   
+        } else {
+            setError("Not a valid IP format")
+            console.log("there's a valid IP format errrrrrrror")
+        }   
     }, [query]);
 
     const dimensions = useWindowSize();
@@ -174,7 +171,7 @@ function App() {
   return (
     <>
         <header 
-            className="absolute w-full h-[40%] bg-cover bg-center bg-no-repeat z-10 font-sans"
+            className="absolute w-full h-[25%] md:h-[40%] bg-cover bg-center bg-no-repeat z-10 font-sans"
             style={{backgroundImage: `url(${bgImage})`}}
         >
             <Header 

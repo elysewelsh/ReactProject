@@ -11,7 +11,7 @@ export default function SearchInput ({setQuery}) {
     }
     
     return (
-            <form className="flex flex-row justify-center min-w-[30vw] h-[3.5rem] m-4" onSubmit={handle}>
+            <form className="flex flex-row justify-center min-w-[70vw] md:min-w-[30vw] h-[3.5rem] m-4" onSubmit={handle}>
                 <input
                 className="bg-white flex-grow text-gray-800 px-4 rounded-l-xl"
                 value={input}
